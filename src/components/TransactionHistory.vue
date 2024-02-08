@@ -42,16 +42,16 @@ export default {
   methods: {
       addTransaction(amount, paymentMethod, employeeCount) {
           this.transactions.unshift({ amount, paymentMethod, employeeCount });
-          this.totalPaid += employeeCount; // Actualizar el monto total pagado
+          this.totalPaid += employeeCount; 
           localStorage.setItem('transactions', JSON.stringify(this.transactions));
-          localStorage.setItem('totalPaid', this.totalPaid); // Guardar el monto total pagado en el almacenamiento local
+          localStorage.setItem('totalPaid', this.totalPaid); 
       },
       removeTransaction(index) {
           const employeeCount = this.transactions[index].employeeCount;
           this.transactions.splice(index, 1);
-          this.totalPaid -= employeeCount; // Actualizar el monto total pagado
+          this.totalPaid -= employeeCount; 
           localStorage.setItem('transactions', JSON.stringify(this.transactions));
-          localStorage.setItem('totalPaid', this.totalPaid); // Guardar el monto total pagado en el almacenamiento local
+          localStorage.setItem('totalPaid', this.totalPaid); 
       },
       addPayment() {
           const selectedMethod = localStorage.getItem('selectedMethod');
@@ -66,7 +66,7 @@ export default {
     if (storedTransactions) {
         this.transactions = JSON.parse(storedTransactions);
     } else {
-        // Simular algunas transacciones de ejemplo si no hay ninguna almacenada
+        
         this.transactions.push({ amount: 20, paymentMethod: 'Efectivo', employeeCount: 1 });
         this.transactions.push({ amount: 30, paymentMethod: 'Tarjeta', employeeCount: 2 });
     }
@@ -74,15 +74,15 @@ export default {
     this.selectedMethod = localStorage.getItem('selectedMethod') || '';
     this.tipPerEmployee = parseFloat(localStorage.getItem('tipPerEmployee')) || 0;
     this.totalTips = parseFloat(localStorage.getItem('totalTips')) || 0;
-    this.totalPaid = parseFloat(localStorage.getItem('totalPaid')) || 0; // Cargar el monto total pagado desde el almacenamiento local
+    this.totalPaid = parseFloat(localStorage.getItem('totalPaid')) || 0; 
 }
 };
 </script>
 
 <style scoped>
 .component-container {
-  margin-top: -400px; /* Mover hacia arriba */
-  margin-left: 60%; /* Mover hacia la derecha */
+  margin-top: -400px; 
+  margin-left: 60%; 
 }
 
 ul {
@@ -91,8 +91,8 @@ ul {
 }
 
 .transaction-cards-container {
-  max-height: 200px; /* Altura fija para el contenedor de transacciones */
-  overflow-y: auto; /* Añadir desplazamiento vertical si hay demasiadas transacciones */
+  max-height: 200px; 
+  overflow-y: auto; 
 }
 
 .transaction-cards-container {
@@ -102,7 +102,7 @@ ul {
 }
 
 .transaction-card {
-  width: calc(70% - 10%); /* Ajusta el ancho de la tarjeta y considera el margen */
+  width: calc(70% - 10%); 
   margin-bottom: 20px;
   border: 1px solid #ccc;
   padding: 9px;
@@ -118,7 +118,7 @@ ul {
 }
 
 .transaction-info {
-  margin: 5px 0; /* Ajusta el margen vertical */
+  margin: 5px 0; 
 }
 
 .pay-tip-button {
@@ -126,29 +126,29 @@ ul {
   border: 1px solid #ccc;
   padding: 15px 30px;
   cursor: pointer;
-  background-color: #ffffff; /* Color gris */
+  background-color: #ffffff; 
   border-radius: 50px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 90px; /* Reducir el margen superior */
-  margin-left: auto; /* Mover el botón hacia la derecha */
+  margin-top: 90px; 
+  margin-left: auto; 
 }
 
 .pay-tip-button:hover {
-  background-color: #a29595; /* Color gris más oscuro al pasar el ratón */
+  background-color: #a29595; 
 }
 
 .payment-info {
-  display: flex; /* Hacer que los elementos estén en la misma línea */
-  flex-direction: column; /* Alinear los elementos verticalmente */
-  align-items: flex-start; /* Alinear los elementos a la izquierda */
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start;
   width: 100%;
-  margin-top: -40px; /* Espacio entre los elementos */
+  margin-top: -40px; 
   margin-left: -130%;
 }
 
 .payment-info-item {
   margin: 0;
-  font-size: 1.2em; /* Agrandar el tamaño del texto */
+  font-size: 1.2em; 
 }
 
 .orange-text {

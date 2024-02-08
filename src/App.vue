@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- Componentes del sistema -->
     <TotalTips />
     <TipDivision />
     <PaymentMethods />
@@ -9,14 +8,13 @@
 </template>
 
 <script>
-// import TotalTips from './components/TotalTips.vue';
 import TipDivision from './components/TipDivision.vue';
 import PaymentMethods from './components/PaymentMethods.vue';
 import TransactionHistory from './components/TransactionHistory.vue';
 
 export default {
   components: {
-    // TotalTips,
+
     TipDivision,
     PaymentMethods,
     TransactionHistory,
@@ -29,7 +27,7 @@ export default {
   methods: {
     payTip() {
       try {
-        // Agregar una nueva transacción con el monto total de propinas y el método de pago seleccionado
+  
         this.transactions.unshift({ amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
         console.log('Transacción agregada:', { amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
       } catch (error) {
@@ -54,12 +52,11 @@ export default {
     }
   },
   created() {
-    // Manejo de eventos personalizados
     this.$root.$on('payment-method-updated', this.handlePaymentMethodUpdate);
     this.$root.$on('tip-per-employee-calculated', this.handleTipPerEmployeeCalculated);
   },
   beforeDestroy() {
-    // Desvincular eventos personalizados para evitar problemas de memoria
+    
     this.$root.$off('payment-method-updated', this.handlePaymentMethodUpdate);
     this.$root.$off('tip-per-employee-calculated', this.handleTipPerEmployeeCalculated);
   }

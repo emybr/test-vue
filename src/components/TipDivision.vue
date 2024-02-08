@@ -22,7 +22,6 @@
     </div>
     
     <div class="calculator-container">
-      <!-- Contenido de la calculadora -->
       <div class="numeric-keypad" v-show="showKeypad">
         <button v-for="num in [1,2,3,4,5,6,7,8,9,0]" :key="num" @click="appendNumber(num)" class="numeric-keypad-button">{{ num }}</button>
         <button @click="clearInput" class="numeric-keypad-button">Clear</button>
@@ -43,8 +42,8 @@
         totalTipsValue: localStorage.getItem('totalTips') || 0,
         numEmployeesValue: '',
         tipPerEmployee: localStorage.getItem('tipPerEmployee') || 0,
-        showKeypad: false, // Inicialmente oculto
-        activeField: null // Campo de entrada activo
+        showKeypad: false, 
+        activeField: null 
       }
     },
     methods: {
@@ -57,14 +56,13 @@
           this.$root.$emit('tip-per-employee-calculated', this.tipPerEmployee);
           localStorage.setItem('tipPerEmployee', this.tipPerEmployee);
           localStorage.setItem('totalTips', this.totalTipsValue);
-          this.totalTipsValue = ''; // Reiniciar el campo después del cálculo
-          this.numEmployeesValue = ''; // Reiniciar el campo después del cálculo
+          this.totalTipsValue = ''; 
+          this.numEmployeesValue = ''; 
         } else {
           this.tipPerEmployee = 0;
         }
       },
       appendNumber(num) {
-        // Agrega el número seleccionado al campo de entrada activo
         if (this.activeField === 'totalTips') {
           this.totalTipsValue += num;
         } else if (this.activeField === 'numEmployees') {
@@ -72,7 +70,6 @@
         }
       },
       clearInput() {
-        // Limpia el campo de entrada activo
         if (this.activeField === 'totalTips') {
           this.totalTipsValue = '';
         } else if (this.activeField === 'numEmployees') {
@@ -80,13 +77,11 @@
         }
       },
       updateTotalTips() {
-        // Actualiza el valor de totalTips y emite un evento cuando cambie
         localStorage.setItem('totalTips', this.totalTipsValue);
         this.$root.$emit('total-tips-updated', parseFloat(this.totalTipsValue));
       }
     },
     mounted() {
-      // Mostrar el teclado numérico al principio
       this.showKeypad = true;
       this.$root.$on('total-tips-updated', totalTips => {
         this.totalTipsValue = totalTips.toString();
@@ -99,15 +94,15 @@
   .input-container {
     display: flex;
     align-items: center;
-    margin-bottom: 8px; /* Espacio entre el "Monto Total de Propinas" y la calculadora */
+    margin-bottom: 8px; 
   }
 
   .payment-info {
   width: 100%;
   display: flex;
-  justify-content: space-between; /* Espacio igual entre los elementos */
-  border-top: 1px solid #ccc; /* Línea divisoria gris arriba */
-  margin-top: 10px; /* Espacio adicional arriba de los elementos */
+  justify-content: space-between; 
+  border-top: 1px solid #ccc; 
+  margin-top: 10px; 
 }
 
 .payment-info-item {
@@ -117,14 +112,14 @@
   .input-fields {
     display: flex;
     flex-direction: column;
-    margin-right: 20px; /* Espacio entre los campos de entrada */
+    margin-right: 20px; 
   }
   
   .calculator-container {
     background-color: rgba(238, 211, 182, 0.711);
     padding: 15px;
     border-radius: 10px;
-    width: 220px; /* Ajusta el ancho de la calculadora según sea necesario */
+    width: 220px; 
     height: 250px;
     margin-left: 5% ;
     margin-top: 5px;
@@ -132,8 +127,8 @@
   
   .input-field {
     position: relative;
-    background-color: #FFDAB9; /* Fondo más claro de naranja */
-    color: #FF6600; /* Naranja fuerte */
+    background-color: #FFDAB9; 
+    color: #FF6600; 
     border: 1px solid orange;
     padding: 10px;
     margin: 5px;
@@ -144,9 +139,9 @@
   }
   
   .input-field input {
-    color: #FF6600; /* Naranja fuerte */
-    font-size: 1.7em; /* Tamaño de fuente más grande para el número */
-    background-color: #FFDAB9; /* Fondo más claro de naranja */
+    color: #FF6600; 
+    font-size: 1.7em; 
+    background-color: #FFDAB9; 
     border: none;
     width: 100%;
     text-align: center;
@@ -158,15 +153,15 @@
   }
   
   .total-price {
-    font-size: 1.7em; /* Tamaño de fuente más grande para el número */
-    color: #FF6600; /* Naranja fuerte */
+    font-size: 1.7em; 
+    color: #FF6600; 
     margin-bottom: 5px;
     margin-left: 10px;
   }
   
   .total-price-label {
-    font-size: 0.6em; /* Tamaño de fuente más pequeño para el texto */
-    color: #FF6600; /* Naranja fuerte */
+    font-size: 0.6em; 
+    color: #FF6600; 
     margin-bottom: 5px;
     margin-left: 10px;
   }

@@ -5,7 +5,6 @@
         <button :class="{ 'selected': selectedMethod === 'cash' }" @click="selectPaymentMethod('cash')">Efectivo</button>
         <button :class="{ 'selected': selectedMethod === 'BBVA' }" @click="selectPaymentMethod('BBVA')">BBVA</button>
         <button :class="{ 'selected': selectedMethod === 'Santander' }" @click="selectPaymentMethod('Santander')">Santander</button>
-        <!-- Agrega más botones si es necesario -->
       </div>
       
     </div>
@@ -38,7 +37,7 @@
     padding: 5px 10px;
     margin-right: 10px;
     cursor: pointer;
-    background-color: white; /* Fondo blanco */
+    background-color: white; 
     width: 90px;
     height: 40px;
     border-radius: 10px;
