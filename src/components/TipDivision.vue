@@ -1,32 +1,38 @@
+<template>
+<div>
 
-   <template>
-    <div class="">
+  <div class="payment-info">
+    <p class="payment-info-item  blak-text-Titilo">Pagos de propinas </p>
+    <p class="payment-info-item orange-text-Titilo ">Efectivo en caja: 5,500 </p>
+  </div>
+  <div class="input-container">
+    <div class="contenedor-imput">
+
       <div class="input-fields">
-        <div class="imput-field">
-            <label for="totalTips">Monto Total de Propinas:</label>            
-            <input type="text" id="totalTips" v-model="totalTipsValue" @focus="activeField = 'totalTips'">
-        </div>   
-    <div>
-            <div>    
-                <label>¿Entre cuantos empleados quiere dividir la propina Dividir Propinas entre Empleados:?</label>
-            </div>
-            <label for="numEmployees">Número de Empleados:</label>
-            <input type="text" id="numEmployees" v-model="numEmployeesValue" @focus="activeField = 'numEmployees'">
-              <div v-if="tipPerEmployee > 0">
-                <button @click="calculateTipPerEmployee">Calcular</button>
-            <p>Propina por Empleado: {{ tipPerEmployee }} por empleado</p>
-          </div>
-          <div v-else>
-            <p>No se ha calculado la propina por empleado.</p>
-          </div>
+        <label for="totalTips" class="total-price-label">Monto Total de Propinas:</label>            
+        <div class="input-field">
+          <input type="text" id="totalTips" v-model="totalTipsValue" @focus="activeField = 'totalTips'">
         </div>
+        <label for="numEmployees">¿Entre cúantos quieres dividir las Propinas?</label>
+        <input class="imput-Empreado" type="text" id="numEmployees" v-model="numEmployeesValue" @focus="activeField = 'numEmployees'">
+        <button class="calculate-button" @click="calculateTipPerEmployee">Calcular Propina</button>
+        <p v-if="tipPerEmployee > 0">Propina por Empleado: {{ tipPerEmployee }} por empleado</p>
+        <p v-else>No se ha calculado la propina por empleado.</p>
       </div>
-      <!-- Teclado numérico -->
+    </div>
+    
+    <div class="calculator-container">
+      <!-- Contenido de la calculadora -->
       <div class="numeric-keypad" v-show="showKeypad">
         <button v-for="num in [1,2,3,4,5,6,7,8,9,0]" :key="num" @click="appendNumber(num)" class="numeric-keypad-button">{{ num }}</button>
         <button @click="clearInput" class="numeric-keypad-button">Clear</button>
       </div>
     </div>
+  </div>
+  
+</div>  
+
+
   </template>
   
   <script>
@@ -45,7 +51,7 @@
       calculateTipPerEmployee() {
         const totalTips = parseFloat(this.totalTipsValue);
         const numEmployees = parseFloat(this.numEmployeesValue);
-        
+  
         if (!isNaN(totalTips) && !isNaN(numEmployees) && totalTips > 0 && numEmployees > 0) {
           this.tipPerEmployee = (totalTips / numEmployees).toFixed(2);
           this.$root.$emit('tip-per-employee-calculated', this.tipPerEmployee);
@@ -90,29 +96,88 @@
   </script>
   
   <style>
-  .calculator-container {
-    background-color: orange;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px; /* Ajusta el ancho de la calculadora según sea necesario */
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Espacio entre el "Monto Total de Propinas" y la calculadora */
   }
+
+  .payment-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Espacio igual entre los elementos */
+  border-top: 1px solid #ccc; /* Línea divisoria gris arriba */
+  margin-top: 10px; /* Espacio adicional arriba de los elementos */
+}
+
+.payment-info-item {
+  margin-left: 5%;
+}
   
   .input-fields {
     display: flex;
     flex-direction: column;
+    margin-right: 20px; /* Espacio entre los campos de entrada */
   }
   
-  .input-fields > div {
-    margin-top: 10px;
+  .calculator-container {
+    background-color: rgba(238, 211, 182, 0.711);
+    padding: 15px;
+    border-radius: 10px;
+    width: 220px; /* Ajusta el ancho de la calculadora según sea necesario */
+    height: 250px;
+    margin-left: 5% ;
+    margin-top: 5px;
+  }
+  
+  .input-field {
+    position: relative;
+    background-color: #FFDAB9; /* Fondo más claro de naranja */
+    color: #FF6600; /* Naranja fuerte */
+    border: 1px solid orange;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 150px;
+    height: 23px;
+    
+  }
+  
+  .input-field input {
+    color: #FF6600; /* Naranja fuerte */
+    font-size: 1.7em; /* Tamaño de fuente más grande para el número */
+    background-color: #FFDAB9; /* Fondo más claro de naranja */
+    border: none;
+    width: 100%;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border-radius: 15px
+  }
+  
+  .total-price {
+    font-size: 1.7em; /* Tamaño de fuente más grande para el número */
+    color: #FF6600; /* Naranja fuerte */
+    margin-bottom: 5px;
+    margin-left: 10px;
+  }
+  
+  .total-price-label {
+    font-size: 0.6em; /* Tamaño de fuente más pequeño para el texto */
+    color: #FF6600; /* Naranja fuerte */
+    margin-bottom: 5px;
+    margin-left: 10px;
   }
   
   .calculator-container input[type="text"],
   .calculator-container button {
     background-color: white;
     color: black;
-    border: 1px solid orange;
+    border: 1px solid rgb(131, 121, 101);
     padding: 10px;
-    margin: 5px;
+    margin: 1px;
     border-radius: 5px;
   }
   
@@ -132,15 +197,35 @@
     border-radius: 5px;
   }
 
-  .imput-field {
-    position: relative;
-    background-color: #FFDAB9; 
-    color: #FF6600; 
-    border: 1px solid orange;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
+  .contenedor-imput{
+    margin-left: 5%;
+    margin-top: -7%;
+  }
+
+  .orange-text-Titilo  {
+  color: #FF6600;
+  background-color: #ff66003c;
+  font-size: 2rem;
 }
 
+.blak-text-Titilo{
+  color: #000;
+  font-size: 2rem;
+}
+
+.calculate-button{
+  background-color: #FF6600;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.imput-Empreado{
+  width: 70px;
+  height: 23px;
+  border-radius: 10px;
+}
   </style>
   

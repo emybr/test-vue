@@ -1,6 +1,6 @@
-
 <template>
   <div id="app">
+    <!-- Componentes del sistema -->
     <TotalTips />
     <TipDivision />
     <PaymentMethods />
@@ -19,30 +19,50 @@ export default {
     // TotalTips,
     TipDivision,
     PaymentMethods,
-    TransactionHistory
+    TransactionHistory,
   },
   data() {
     return {
       transactions: []
-    }
+    };
   },
   methods: {
     payTip() {
-      // Agregar una nueva transacción con el monto total de propinas y el método de pago seleccionado
-      this.transactions.unshift({ amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
-      console.log('Transacción agregada: aaaaaa', { amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
+      try {
+        // Agregar una nueva transacción con el monto total de propinas y el método de pago seleccionado
+        this.transactions.unshift({ amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
+        console.log('Transacción agregada:', { amount: this.totalTips, paymentMethod: this.selectedMethod, employeeCount: this.tipPerEmployee });
+      } catch (error) {
+        console.error('Error al agregar la transacción:', error);
+      }
+    },
+    handlePaymentMethodUpdate(paymentMethod) {
+      try {
+        this.transactions.unshift({ amount: this.totalTips, paymentMethod, employeeCount: null });
+        console.log('Transacción agregada:', { amount: this.totalTips, paymentMethod, employeeCount: null });
+      } catch (error) {
+        console.error('Error al actualizar el método de pago:', error);
+      }
+    },
+    handleTipPerEmployeeCalculated(tipPerEmployee) {
+      try {
+        this.transactions.unshift({ amount: this.totalTips, paymentMethod: 'cash', employeeCount: tipPerEmployee });
+        console.log('Transacción agregada:', { amount: this.totalTips, paymentMethod: 'cash', employeeCount: tipPerEmployee });
+      } catch (error) {
+        console.error('Error al calcular propinas por empleado:', error);
+      }
     }
   },
-    created() {
-      this.$root.$on('payment-method-updated', paymentMethod => {
-        this.transactions.unshift({ amount: this.totalTips, paymentMethod, employeeCount: null });
-        console.log('Transacción agregada create:', { amount: this.totalTips, paymentMethod, employeeCount: null });
-      });
-      
-      this.$root.$on('tip-per-employee-calculated', tipPerEmployee => {
-        this.transactions.unshift({ amount: this.totalTips, paymentMethod: 'cash', employeeCount: tipPerEmployee });
-        console.log('Transacción agregada: va', { amount: this.totalTips, paymentMethod: 'cash', employeeCount: tipPerEmployee });
-      });
-    }
+  created() {
+    // Manejo de eventos personalizados
+    this.$root.$on('payment-method-updated', this.handlePaymentMethodUpdate);
+    this.$root.$on('tip-per-employee-calculated', this.handleTipPerEmployeeCalculated);
+  },
+  beforeDestroy() {
+    // Desvincular eventos personalizados para evitar problemas de memoria
+    this.$root.$off('payment-method-updated', this.handlePaymentMethodUpdate);
+    this.$root.$off('tip-per-employee-calculated', this.handleTipPerEmployeeCalculated);
   }
+};
 </script>
+
